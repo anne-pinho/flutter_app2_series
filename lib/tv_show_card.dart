@@ -11,7 +11,7 @@ class TvShowCard extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: Icon(Icons.stream),
-        title: (tvShow.title),
+        title: Text(tvShow.title),
         subtitle: Text(tvShow.stream),
         trailing: Text(tvShow.rating.toString()),
       ),
