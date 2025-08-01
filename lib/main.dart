@@ -1,14 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app2_series/tv_show_card.dart';
+import 'package:flutter_app2_series/add_tv_show_screen.dart';
 import 'package:flutter_app2_series/tv_show_data.dart';
+import 'package:flutter_app2_series/tv_show_model.dart';
+import 'package:flutter_app2_series/tv_show_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  final List<TvShow> tvShows = favTvShowList;
+
+  //Screen control
+  int currentScreenIndex = 0;
+
+  List<Widget> get screens => [
+    TvShowScreen(tvShows: tvShows),
+    AddTvShowScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +91,7 @@ class MainApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       home: Scaffold(
         appBar: AppBar(title: const Text('Eu Amo Séries 🎬')),
-        body: ListView.builder(
-          itemCount: favTvShowList.length,
-          itemBuilder: (context, index) =>
-              TvShowCard(tvShow: favTvShowList[index], index: index),
-        ),
+        body: screens[currentScreenIndex],
       ),
     );
   }
