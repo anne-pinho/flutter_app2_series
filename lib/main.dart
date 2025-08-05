@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app2_series/add_tv_show_screen.dart';
+import 'package:flutter_app2_series/custom_drawer.dart';
 import 'package:flutter_app2_series/tv_show_data.dart';
 import 'package:flutter_app2_series/tv_show_model.dart';
 import 'package:flutter_app2_series/tv_show_screen.dart';
@@ -27,6 +28,20 @@ class _MainAppState extends State<MainApp> {
     AddTvShowScreen(),
   ];
 
+  void switchScreen(int index) {
+    setState(() {
+      currentScreenIndex = index;
+    });
+  }
+
+  //Theme Control
+  bool isDark = false;
+  void switchTheme() {
+    setState(() {
+      isDark = !isDark;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var color = Colors.purple;
@@ -47,11 +62,12 @@ class _MainAppState extends State<MainApp> {
         centerTitle: true,
         toolbarHeight: 100,
         backgroundColor: colorScheme.primary,
-        titleTextStyle: GoogleFonts.nunito(
+        titleTextStyle: GoogleFonts.lobster(
           fontSize: 36,
           fontWeight: FontWeight.bold,
           color: colorScheme.onPrimary,
         ),
+        iconTheme: IconThemeData(color: colorScheme.onPrimary, size: 36),
       ),
       cardTheme: CardThemeData(
         color: colorScheme.secondaryContainer,
@@ -69,11 +85,12 @@ class _MainAppState extends State<MainApp> {
         centerTitle: true,
         toolbarHeight: 100,
         backgroundColor: colorScheme.primary,
-        titleTextStyle: GoogleFonts.nunito(
+        titleTextStyle: GoogleFonts.lobster(
           fontSize: 36,
           fontWeight: FontWeight.bold,
           color: colorScheme.onPrimary,
         ),
+        iconTheme: IconThemeData(color: colorScheme.onPrimary, size: 36),
       ),
       cardTheme: CardThemeData(
         color: colorScheme.onSecondaryContainer,
@@ -88,9 +105,14 @@ class _MainAppState extends State<MainApp> {
       debugShowCheckedModeBanner: false,
       theme: customTheme,
       darkTheme: customThemeDark,
-      themeMode: ThemeMode.system,
+      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       home: Scaffold(
         appBar: AppBar(title: const Text('Eu Amo Séries 🎬')),
+        drawer: CustomDrawer(
+          isDark: isDark,
+          switchTheme: switchTheme,
+          switchScreen: switchScreen,
+        ),
         body: screens[currentScreenIndex],
       ),
     );
