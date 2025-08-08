@@ -20,12 +20,26 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> {
   final List<TvShow> tvShows = favTvShowList;
 
+  void addTvShow(TvShow tvShow) {
+    setState(() {
+      tvShows.add(tvShow);
+    });
+  }
+
+  void removeTvShow(TvShow tvShow) {
+    // final index = tvShows.indexWhere(show) => show.title.toLowerCase() == tvShow.title.toLowerCase();
+    setState(() {
+      // tvShows.removeAt(index);
+      tvShows.remove(tvShow);
+    });
+  }
+
   //Screen control
   int currentScreenIndex = 0;
 
   List<Widget> get screens => [
-    TvShowScreen(tvShows: tvShows),
-    AddTvShowScreen(),
+    TvShowScreen(tvShows: tvShows, removeTvShow: removeTvShow),
+    AddTvShowScreen(addTvShow: addTvShow, switchScreen: switchScreen),
   ];
 
   void switchScreen(int index) {
